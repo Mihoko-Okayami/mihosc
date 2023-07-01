@@ -1,0 +1,15 @@
+{
+  "ADDRESS_SENDING": "127.0.0.1",
+  "PORT_SENDING": 9000,
+  "ADDRESS_LISTENING": "0.0.0.0",
+  "PORT_LISTENING": 9001,
+  "ENABLE_CHATBOX": true,
+  "SAVE_INTERVAL": 5,
+  "INTERACTIONS": {
+    "Receivers/Head/Hand": "Patpats",
+    "Receivers/Head/Foot": "Masochistes",
+    "Receivers/Nose/Hand": "Boops",
+    "Receivers/Nose/Foot": "Fétichistes",
+    "Receivers/Nose/Head": "Bisous"
+  }
+}
