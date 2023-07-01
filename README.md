@@ -22,7 +22,7 @@ Avant d'exécuter l'application, vous devez configurer les paramètres dans le f
   "INTERACTIONS": {
     "Receivers/Head/Hand": "Patpats",
     "Receivers/Head/Foot": "Masochistes",
-    "Receivers/Nose/Hand": "Boop",
+    "Receivers/Nose/Hand": "Boops",
     "Receivers/Nose/Foot": "Fétichistes",
     "Receivers/Nose/Head": "Bisous"
   }
