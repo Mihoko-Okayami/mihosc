@@ -36,14 +36,14 @@ function sendConsoleMessage(type, message, error = null) {
 	const timestamp = date.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
 	switch (type) {
 		case 'error':
-			console.error(`[${timestamp}] [Erreur] ${message}`);
+			console.error(`[${timestamp}] \x1b[31m[Erreur]\x1b[0m ${message}`);
 			if (error) {
-				console.error(`[${timestamp}] [Erreur]`, error);
+				console.error(`[${timestamp}] \x1b[31m[Erreur]\x1b[0m`, error);
 			}
 			break;
 		case 'info':
 		default:
-			console.log(`[${timestamp}] [Info] ${message}`);
+			console.log(`[${timestamp}] \x1b[32m[Info]\x1b[0m ${message}`);
 			break;
 	}
 }
