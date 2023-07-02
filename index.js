@@ -25,7 +25,7 @@ function loadData() {
 function saveData() {
 	try {
 		fs.writeFileSync('data.json', JSON.stringify(interactionCount));
-		sendConsoleMessage('info', 'Sauvegarde effectuée avec succès.');
+		sendConsoleMessage('info', '\x1b[36mSauvegarde effectuée avec succès.\x1b[0m');
 	} catch (error) {
 		sendConsoleMessage('error', 'Une erreur s\'est produite lors de la sauvegarde :', error);
 	}
@@ -62,7 +62,7 @@ function sendChatMessage(data) {
 
 function updateInteractionCount(interaction) {
 	interactionCount[interaction] = (interactionCount[interaction] || 0) + 1;
-	sendConsoleMessage('info', `Interaction: ${interaction}, Nombre: ${interactionCount[interaction]}`);
+	sendConsoleMessage('info', `\x1b[2m${config.INTERACTIONS[interaction]}: ${interactionCount[interaction]} ( ${interaction} )\x1b[0m`);
 }
 
 server.on('message', (data) => {
