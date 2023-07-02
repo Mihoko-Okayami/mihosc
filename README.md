@@ -18,6 +18,7 @@ Avant d'exécuter l'application, vous devez configurer les paramètres dans le f
   "ADDRESS_LISTENING": "0.0.0.0",
   "PORT_LISTENING": 9001,
   "ENABLE_CHATBOX": true,
+  "ENABLE_WHEN_AFK": false,
   "SAVE_INTERVAL": 5,
   "INTERACTIONS": {
     "Receivers/Head/Hand": "Patpats",
@@ -34,6 +35,7 @@ Avant d'exécuter l'application, vous devez configurer les paramètres dans le f
 - **PORT_SENDING :** Port sur lequel le client OSC enverra les messages.
 - **ADDRESS_SENDING :** Adresse à laquelle le client OSC enverra les messages.
 - **ENABLE_CHATBOX :** Une valeur booléenne ( true/false ) pour activer ou désactiver l'envoi des messages à la chatbox de VRChat.
+- **ENABLE_WHEN_AFK :** Une valeur booléenne ( true/false ) pour activer ou désactiver les compteurs ainsi que les messages quand AFK.
 - **SAVE_INTERVAL :** Intervalle de temps en minutes pour la sauvegarde automatique des compteurs.
 - **INTERACTIONS :** Liste des paramètres à surveiller sur votre avatar ainsi que le nom du compteur.
 

@@ -4,6 +4,7 @@
   "ADDRESS_LISTENING": "0.0.0.0",
   "PORT_LISTENING": 9001,
   "ENABLE_CHATBOX": true,
+  "ENABLE_WHEN_AFK": false,
   "SAVE_INTERVAL": 5,
   "INTERACTIONS": {
     "Receivers/Head/Hand": "Patpats",

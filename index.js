@@ -7,6 +7,7 @@ const client = new osc.Client(config.ADDRESS_SENDING, config.PORT_SENDING);
 
 let interactionCount = {};
 let lastChatMessage = null;
+let isAfkEnabled = false;
 
 function loadData() {
 	if (fs.existsSync('data.json')) {
@@ -66,9 +67,22 @@ function updateInteractionCount(interaction) {
 
 server.on('message', (data) => {
 	const [address, flag] = data;
-	if (address.startsWith('/avatar/parameters/') && flag === true) {
+	if (address.startsWith('/avatar/parameters/')) {
 		const parameter = address.substring('/avatar/parameters/'.length);
-		if (config.INTERACTIONS.hasOwnProperty(parameter)) {
+		if (parameter === 'AFK') {
+			isAfkEnabled = flag;
+			if (!config.ENABLE_WHEN_AFK) {
+				if (flag === true) {
+					sendConsoleMessage('info', 'Début d\'AFK => Les compteurs sont maintenant en pause.');
+				} else {
+					sendConsoleMessage('info', 'Fin d\'AFK => Les compteurs sont à nouveau actifs.');
+				}
+			}
+		}
+		if (isAfkEnabled && !config.ENABLE_WHEN_AFK) {
+			return;
+		}
+		if (flag === true && config.INTERACTIONS.hasOwnProperty(parameter)) {
 			updateInteractionCount(parameter);
 			if (config.ENABLE_CHATBOX) {
 				const message = `${config.INTERACTIONS[parameter]}: ${interactionCount[parameter]}`;
