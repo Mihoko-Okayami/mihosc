@@ -21,7 +21,7 @@ function loadData() {
 			}
 		} catch (error) {
 			sendConsoleMessage('error', 'Une erreur s\'est produite lors du chargement de la sauvegarde :', error);
-			process.exit();
+			process.exit(1);
 		}
 	}
 }
@@ -53,11 +53,11 @@ function sendConsoleMessage(type, message, error = null) {
 }
 
 function sendChatMessage(data) {
-	const currentTimestamp = Date.now();
-	if (lastChatMessage === null || (currentTimestamp - lastChatMessage.timestamp > 1000 && data !== lastChatMessage.message)) {
+	const timestamp = Date.now();
+	if (lastChatMessage === null || (timestamp - lastChatMessage.timestamp > 1000 && data !== lastChatMessage.message)) {
 		try {
 			client.send(new osc.Message('/chatbox/input', data, true));
-			lastChatMessage = { message: data, timestamp: currentTimestamp };
+			lastChatMessage = { message: data, timestamp: timestamp };
 		} catch (error) {
 			sendConsoleMessage('error', 'Une erreur s\'est produite lors de l\'envoi du message dans la chatbox de VRChat :', error);
 		}
@@ -71,12 +71,12 @@ function updateInteractionCount(interaction) {
 
 server.on('message', (data) => {
 	const [address, flag] = data;
-	if (address.startsWith('/avatar/parameters/')) {
+	if (address.startsWith('/avatar/parameters/') && typeof flag === 'boolean') {
 		const parameter = address.substring('/avatar/parameters/'.length);
 		if (parameter === 'AFK') {
 			isAfkEnabled = flag;
 			if (!config.ENABLE_WHEN_AFK) {
-				if (flag === true) {
+				if (flag) {
 					sendConsoleMessage('info', 'Début d\'AFK => Les compteurs sont maintenant en pause.');
 				} else {
 					sendConsoleMessage('info', 'Fin d\'AFK => Les compteurs sont à nouveau actifs.');
@@ -86,7 +86,7 @@ server.on('message', (data) => {
 		if (isAfkEnabled && !config.ENABLE_WHEN_AFK) {
 			return;
 		}
-		if (flag === true && config.INTERACTIONS.hasOwnProperty(parameter)) {
+		if (flag && config.INTERACTIONS.hasOwnProperty(parameter)) {
 			updateInteractionCount(parameter);
 			if (config.ENABLE_CHATBOX) {
 				const message = `${config.INTERACTIONS[parameter]}: ${interactionCount[parameter]}`;
@@ -100,7 +100,7 @@ server.on('listening', (error) => {
 	if (error) {
 		sendConsoleMessage('error', `Une erreur s'est produite lors du démarrage de MihOSC à l'adresse [${config.ADDRESS_LISTENING}:${config.PORT_LISTENING}].`);
 		sendConsoleMessage('error', `Assurez-vous qu'aucune autre application OSC ne fonctionne déjà sur le port ${config.PORT_LISTENING}.`, error);
-		process.exit();
+		process.exit(1);
 	} else {
 		sendConsoleMessage('info', `MihOSC est en écoute et prêt à fonctionner à l'adresse [${config.ADDRESS_LISTENING}:${config.PORT_LISTENING}] !`);
 	}
@@ -112,5 +112,5 @@ setInterval(saveData, config.SAVE_INTERVAL * 60 * 1000);
 process.on('SIGINT', () => {
 	sendConsoleMessage('info', 'Sauvegarde des compteurs avant fermeture de l\'application...');
 	saveData();
-	process.exit();
+	process.exit(0);
 });
