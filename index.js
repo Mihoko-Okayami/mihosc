@@ -21,6 +21,7 @@ function loadData() {
 			}
 		} catch (error) {
 			sendConsoleMessage('error', 'Une erreur s\'est produite lors du chargement de la sauvegarde :', error);
+			process.exit();
 		}
 	}
 }
@@ -97,9 +98,11 @@ server.on('message', (data) => {
 
 server.on('listening', (error) => {
 	if (error) {
-		sendConsoleMessage('error', `Une erreur s'est produite lors du démarrage du serveur OSC sur l'adresse [${config.ADDRESS_LISTENING}:${config.PORT_LISTENING}] :`, error);
+		sendConsoleMessage('error', `Une erreur s'est produite lors du démarrage de MihOSC à l'adresse [${config.ADDRESS_LISTENING}:${config.PORT_LISTENING}].`);
+		sendConsoleMessage('error', `Assurez-vous qu'aucune autre application OSC ne fonctionne déjà sur le port ${config.PORT_LISTENING}.`, error);
+		process.exit();
 	} else {
-		sendConsoleMessage('info', `Le serveur OSC est en écoute et prêt à fonctionner à l'adresse [${config.ADDRESS_LISTENING}:${config.PORT_LISTENING}] !`);
+		sendConsoleMessage('info', `MihOSC est en écoute et prêt à fonctionner à l'adresse [${config.ADDRESS_LISTENING}:${config.PORT_LISTENING}] !`);
 	}
 });
 
