@@ -15,7 +15,10 @@ function loadData() {
 		try {
 			const data = fs.readFileSync('data.json', 'utf8');
 			interactionCount = JSON.parse(data);
-			sendConsoleMessage('info', 'La sauvegarde a été chargée avec succès !');
+			sendConsoleMessage('info', 'La sauvegarde a été chargée avec succès :');
+			for (const interaction in interactionCount) {
+				sendConsoleMessage('info', `\x1b[33m${config.INTERACTIONS[interaction]}: ${interactionCount[interaction]} ( ${interaction} )\x1b[0m`);
+			}
 		} catch (error) {
 			sendConsoleMessage('error', 'Une erreur s\'est produite lors du chargement de la sauvegarde :', error);
 		}
